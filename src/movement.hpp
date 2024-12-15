@@ -27,13 +27,12 @@ extern void Move(int left, int right);
 extern void BStop();
 extern void CStop();
 extern void RunRoller(int val);
-extern void RunLift(int val);
 extern int PrevE;
+extern void Runwallstakes(int val);
 extern void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake);
 extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
-extern void armMoveToAngle(int deg, int speed);
 
 
 #endif

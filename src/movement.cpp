@@ -111,11 +111,10 @@ void RunRoller(int val)
 Roller.setMaxTorque(100,percent);
 Roller.spin(forward,(double)val/100.0*12,volt);
 }
-void RunLift(int val)
+void Runwallstakes(int val)
 {
-lift.setMaxTorque(100,percent);
-lift.spin(forward,(double)val/100.0*12,volt);
-
+  wallstakes.setMaxTorque(100,percent);
+  wallstakes.spin(forward,(double)val/100.0*12,volt);
 }
 int PrevE;//Error at t-1
 
@@ -205,7 +204,7 @@ void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   wait(20, msec);
   }
   if(brake){BStop();
-  wait(100,msec);}
+  wait(180,msec);}
   else CStop();
 }
 
@@ -283,27 +282,4 @@ if(fabs(CSpeed)<fabs((double)Speed))
   if(brake){BStop();
   wait(200,msec);}
   else CStop();
-}
-
-void armMoveToAngle(int deg, int speed) {
-
-  if (abs(liftSensor.position(degrees)) < deg) {
-    while (abs(liftSensor.position(degrees)) < deg) {
-      RunLift(-speed);
-    }
-    lift.setStopping(hold);
-    lift.stop();
-
-  }
-  else if (abs(liftSensor.position(degrees)) > deg) {
-    while (abs(liftSensor.position(degrees)) > deg+4) {
-      RunLift(speed);
-    }
-    lift.setStopping(hold);
-    lift.stop();
-  }
-  else if (abs(liftSensor.position(degrees)) < 15) {
-    lift.setStopping(hold);
-    lift.stop();
-  }
 }

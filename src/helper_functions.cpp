@@ -9,6 +9,6 @@
  */
 double get_dist_travelled(double degreesTravelled) {
     std::cout << "gear ratio " << wheelToMotorRatio << M_PI*wheelDiam << std::endl;
-    std::cout << degreesTravelled * wheelToMotorRatio / 360 * (3.14*wheelDiam) << std::endl;
-    return fabs((degreesTravelled  * wheelToMotorRatio) / 360  * (3.14*wheelDiam) * 1.33);
+    std::cout << degreesTravelled * wheelToMotorRatio / 360 * (M_PI*wheelDiam) << std::endl;
+    return fabs(degreesTravelled * wheelToMotorRatio / 360 * (M_PI*wheelDiam));
 }
