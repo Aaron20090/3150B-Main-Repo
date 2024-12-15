@@ -9,12 +9,13 @@
 
 //#include "STDLib.cpp"
 #include "vex.h"
-
+#include "math.h"
 #include "screen_gui.hpp"
 #include "movement.hpp"
 #include "routes/routes.hpp"
-
+#include <iostream>
 using namespace vex;
+using namespace std;
 
 // A global instance of competition
 competition Competition;
@@ -34,18 +35,25 @@ competition Competition;
 
 bool SP;
 bool EXIT;
+bool Inversion_Constant;
 void pre_auton(void) {
-
+ // liftSensor.resetPosition();
+  
+  lift.setStopping(brake);
    EXIT=false;
-  Pistake.set(true);
-  Tilt.set(true);
-  Clamp.set(true);
+   
+  
   PX=0;
   JX=0;
   AutoSelectorVal=0;
   SP=false;
+  
+  
   // Initializing Robot Configuration. DO NOT REMOVE!
+  wait(1000,msec);
+  
   vexcodeInit();
+  
 Gyro.calibrate();
 
 //Ensure Robot Launch Position is set before auto proceeds, once plugged into field control,
@@ -100,82 +108,113 @@ SP=Brain.Screen.pressing();
 }
 
 Brain.Screen.clearScreen();
+
 if(AutoSelectorVal==1){
-  Brain.Screen.setFillColor(black);
+Brain.Screen.drawRectangle(1,25,100,50);
+  Brain.Screen.setCursor(3,3);
+  Brain.Screen.print("AWP");
+
+Brain.Screen.setFillColor(black);
 Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("AWP");
+if(Inversion_Constant==false)Brain.Screen.print("red");
+else if(Inversion_Constant == true)Brain.Screen.print("blue");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("Risky");
+Brain.Screen.print("AWP");
 Brain.Screen.setFont(monoM);
   Brain.Screen.setFillColor("#f8b195");
 
 }
 
 if(AutoSelectorVal==2){
+Brain.Screen.drawRectangle(375,25,100,50);
+    Brain.Screen.setCursor(3,40);
+  Brain.Screen.print("Risky");
+
 Brain.Screen.setFillColor(black);
 
   Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("Blue Side");
+//Brain.Screen.print("MATCHLOAD");
+if(Inversion_Constant==false)Brain.Screen.print("red");
+else if(Inversion_Constant == true)Brain.Screen.print("Blue");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("SAFEAWP");
+Brain.Screen.print("Risky");
 Brain.Screen.setFont(monoM);
   Brain.Screen.setFillColor("#f8b195");
 }
 
 if(AutoSelectorVal==3){
+  Brain.Screen.drawRectangle(1,100,100,50);
+  Brain.Screen.setCursor(7,3);
+  Brain.Screen.print("n/a");
 
 Brain.Screen.setFillColor(black);
 
     Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("BLUESIDE");
+//Brain.Screen.print("GOAL SIDE");
+if(Inversion_Constant==false)Brain.Screen.print("Red");
+else if(Inversion_Constant == true)Brain.Screen.print("Blue");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("RISKY");
+Brain.Screen.print("n/a");
 Brain.Screen.setFont(monoM);  
   Brain.Screen.setFillColor("#f8b195");
 }
 
 if(AutoSelectorVal==4){
+Brain.Screen.drawRectangle(375,100,100,50);
+  Brain.Screen.setCursor(7,40);
+  Brain.Screen.print("Safe");
 
 Brain.Screen.setFillColor(black);
 
   Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("BLUESIDE");
+//Brain.Screen.print("MATCHLOAD");
+if(Inversion_Constant==false)Brain.Screen.print("Red");
+else if(Inversion_Constant == true)Brain.Screen.print("Blue");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("RISKY AWP");
+Brain.Screen.print("Safe");
 Brain.Screen.setFont(monoM); 
   Brain.Screen.setFillColor("#f8b195");
 
 }
 
 if(AutoSelectorVal==5){
+  Brain.Screen.drawRectangle(1,175,100,50);
+      Brain.Screen.setCursor(11,3);
+  Brain.Screen.print("Simple6Inverted");
 
 Brain.Screen.setFillColor(black);
     Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("GOAL SIDE");
+//Brain.Screen.print("GOAL SIDE");
+if(Inversion_Constant==false)Brain.Screen.print("RED");
+else if(Inversion_Constant == true)Brain.Screen.print("Blue");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("GS-AWP");
+Brain.Screen.print("Risky AWP");
 Brain.Screen.setFont(monoM); 
   Brain.Screen.setFillColor("#f8b195");
 
 }
 
 if(AutoSelectorVal==6){
-  
-  Brain.Screen.setFillColor(black);
-    Brain.Screen.setFont(monoXL);
+Brain.Screen.drawRectangle(375,175,175,50);
+Brain.Screen.setCursor(11,40);
+Brain.Screen.print("ML-AWP");
+Brain.Screen.setFillColor(black);
+Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("MATCHLOAD");
+//Brain.Screen.print("MATCHLOAD");
+if(Inversion_Constant==false)Brain.Screen.print("Red");
+else if(Inversion_Constant == true)Brain.Screen.print("Blue");
 Brain.Screen.setCursor(4,10);
 Brain.Screen.print("ONLY AWP");
 Brain.Screen.setFont(monoM); 
@@ -184,16 +223,22 @@ Brain.Screen.setFont(monoM);
   }
 
 if(AutoSelectorVal==7){
+  //Inversion_Constant=-1;
+  Brain.Screen.setCursor(3,10);
+Brain.Screen.print("blue");
+ /* Brain.Screen.drawRectangle(187,175,100,50);
+  Brain.Screen.setCursor(11,22);
+  Brain.Screen.print("Skills");
 
 Brain.Screen.setFillColor(black);
-Brain.Screen.setFont(monoXL);
+      Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#f8b195");
 Brain.Screen.setCursor(3,10);
 Brain.Screen.print("SKILLS");
 Brain.Screen.setCursor(4,10);
 Brain.Screen.print("SKILLS");
 Brain.Screen.setFont(monoM); 
-Brain.Screen.setFillColor("#f8b195");
+  Brain.Screen.setFillColor("#f8b195");*/
 
 }
 
@@ -227,46 +272,47 @@ void autonomous(void) {
 // MoveTimePID(TestPara, motor speed, time traveled (sec), time to full speed, heading, false);
 
 //Do not change the below
-PIDDataSet TestPara={4,0.1,0.2};
+PIDDataSet TestPara={3.8,0.1,0.1};
 Zeroing(true,true);
 
 //can start editing if nessary
 //Put Auto route function into if statements to use autoselector
 if(AutoSelectorVal==1)//Quali close 6 triball auto 
 {
-  AWP();
+  RedLocalSAWP();
 }
 
 if(AutoSelectorVal==2)// Safe awp
 {
-  mogo();
+  BlueLocalSAWP();
 }
 
 if(AutoSelectorVal==3)//Risky
 {
-  risky();
-} 
+  RedMogoRush();
+  } 
 
 if(AutoSelectorVal==4)// risky AWP
 {
-  ringquad();
+  BlueMogoRush();
 }
 
 if(AutoSelectorVal==5)// 
 {
-  
-}
+  Simple6Inverted();
+
+}                   
 
 
 if(AutoSelectorVal==6)//AWP only
 {
-
+  Simple6();
 }
 
 
-if(AutoSelectorVal==7)//temporary prog skills
-{ 
- 
+if(AutoSelectorVal==7)//DO NOT USE SLOT 7 RESERVED FOR TURN INVERSION
+{   
+  Inversion_Constant= false;
 
 }
 //MoveTimePID(TestPara, -100, 0.5,0.1,-40,true);//score 2nd triball
@@ -279,7 +325,6 @@ CStop();
 }
 int RV;
 int LV;
-
 int DriveTask(void){
   while(true)
   {
@@ -292,19 +337,151 @@ int DriveTask(void){
 return 0;
 }
 int V;
+int ButtonPressingB=0,BTaskActiv=0;
+bool Check = true;
+bool discDetected = false;
+  unsigned counter = 0;
+bool rightcolor;
+bool waiting = false;
+int rollerStopTime = 500; // Time to stop in milliseconds
+int delayStartTime = 0;
+bool rollerSpinning =false;
+
+int arraynumber;
+int arraynumber2;
+int arraynumber3;
+int arrarnumber4;
+vex::timer Timer;
+
 int ATask(void)
 {
+  
   double pow;
-  double powl;  
-    while(true)
+  if(Inversion_Constant == true)
   {
-    pow=((Controller1.ButtonR2.pressing()-Controller1.ButtonR1.pressing())*100);//Calculate intake power, if button pressed, button.pressing returns 1
-    RunRoller(pow);
-    powl=(Controller1.ButtonL2.pressing()-Controller1.ButtonL1.pressing()) *100;
-    Runwallstakes(-powl);  
-  //RunPuncher((Controller1.ButtonB.pressing())*100);
+    arraynumber = 0;
+    arraynumber2 = 10;
+    arraynumber3 = 200;
+    arrarnumber4 = 270;
+
   }
+  else if (Inversion_Constant == false)
+  {
+    arraynumber = 0;
+    arraynumber2 = 10;
+    arraynumber3 = 200;
+    arrarnumber4 = 270;
+  }
+
+  OpSens.integrationTime(5);
+  OpSens.setLightPower(100,percent);
+  double powl; //powl is the power for lift
+  //bool question = false;
+  double hue;
+  
+    while (true) {
+    hue = OpSens.hue();
+
+    // Handle Button B press and task activation/deactivation
+     if (BTaskActiv == 0 && Controller1.ButtonB.pressing() && ButtonPressingB == 0) {
+        Check = false;
+        discDetected = false;
+        ButtonPressingB = 1;  // Button is now pressed
+        BTaskActiv = 1;        // Task is now active
+    } 
+    else if(!Controller1.ButtonB.pressing())ButtonPressingB=0;
+    else if (BTaskActiv == 1 && Controller1.ButtonB.pressing() && ButtonPressingB == 0) {
+        Check = true;
+        ButtonPressingB = 1;   // Button is now pressed
+        BTaskActiv = 0;        // Task is now inactive
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    if (hue >= arraynumber && hue <= arraynumber2 && !discDetected && OpSens.isNearObject() == true) {
+            discDetected = true;
+            rightcolor =true;
+            
+            
+            Roller.resetPosition();
+        }
+    else if(hue >= arraynumber3 && hue<=arrarnumber4 && !discDetected){
+
+        discDetected = true;
+        rightcolor =false;
+        rollerSpinning = true;
+        Roller.resetPosition();
+
+    }
+    // Control roller based on hue detection and button presses
+    if (!Check) {
+      cout<<Roller.position(degrees)<<endl;
+        
+
+        if (discDetected&&rightcolor) {
+          cout<<"disdetected and its the right colour"<<endl;
+            if (Roller.position(degrees) >= -1500) {
+                RunRoller(-100);
+                cout<<"redirecting"<<endl;
+            } else {
+                discDetected = false;
+                
+            }
+        } 
+        else if (!discDetected) {
+            
+            pow = (Controller1.ButtonR2.pressing() - Controller1.ButtonR1.pressing()) * 100;
+            RunRoller(-pow);
+        }
+    } 
+    else {
+        pow = (Controller1.ButtonR2.pressing() - Controller1.ButtonR1.pressing()) * 100;
+        RunRoller(-pow);
+    }/*
+    if (rollerSpinning) {
+      if(!rightcolor){
+        if (Roller.position(degrees) > 792) {  // Approximately 2.2 rotations (360 * 2.2 = 792 degrees)
+              RunRoller(0);  // Stop the roller
+                // Stop spinning
+              rollerSpinning=false;
+              waiting = true;  // Start waiting
+              Timer.clear();
+              delayStartTime = Timer.time(); // Record the current time
+          }
+      }
+    }
+
+    // Handle the non-blocking wait outside the main if-check loop
+    if (waiting) {
+      cout<<"a"<<endl;
+      cout<<delayStartTime<<endl;
+      
+        // Check if the delay time has passed
+        if (delayStartTime>= rollerStopTime) {
+            waiting = false;  // Stop waiting
+            discDetected = false;  // Reset disc detection
+            RunRoller(-100);  // Start the roller again
+            rightcolor= true;
+            Roller.resetPosition();  // Reset the roller's position after restarting
+        }
+      
+    }*/
+    
+    }
+
+    // Control lift power based on button presses
+    return 0;
+    
 }
+        
+        
+  //RunPuncher((Controller1.ButtonB.pressing())*100);
+
+  
+  
+
+
+
 
 int ButtonPressingX,XTaskActiv;
 int ButtonPressingY,YTaskActiv;
@@ -319,39 +496,35 @@ int PTask(void)
     {
       ButtonPressingX=1;//Button is now pressed
       XTaskActiv=1;//Task is now active
-      Clamp.set(true);
+      doinker.set(true);
     }
- 
+
     else if(!Controller1.ButtonX.pressing())ButtonPressingX=0;
 
-    else if(Controller1.ButtonX.pressing()&&ButtonPressingX==0)//Finding if task is active and if ButtonX wasn't pressed before
+    else if(XTaskActiv==1&&Controller1.ButtonX.pressing()&&ButtonPressingX==0)//Finding if task is active and if ButtonX wasn't pressed before
     {
       ButtonPressingX=1;//Button is now pressed
       XTaskActiv=0;//Task is now NOT running
-      Clamp.set(false);
+      doinker.set(false);
     }
     //----------------------
       //Toggles Clamp
-
-    
-    /*if(YTaskActiv==0&&Controller1.ButtonY.pressing()&&ButtonPressingY==0)//Finding if ButtonY is pressing and if it was held down before.
+    if(YTaskActiv==0&&Controller1.ButtonY.pressing()&&ButtonPressingY==0)//Finding if ButtonY is pressing and if it was held down before.
     {
       ButtonPressingY=1;//Button is now pressed
       YTaskActiv=1;//Task is now active
-      OPMECH.set(true);
+      Clamp.set(true);
     }
 
-    //else if(!Controller1.ButtonY.pressing())ButtonPressingY=0;//Button is not pressed so pressing is set to 0
+    else if(!Controller1.ButtonY.pressing())ButtonPressingY=0;//Button is not pressed so pressing is set to 0
 
     else if(YTaskActiv==1&&Controller1.ButtonY.pressing()&&ButtonPressingY==0)//Findingif Ytask already happened(clamp active)
     {
       ButtonPressingY=1;//Button pressed
       YTaskActiv=0;//Task is now NOT happening 
-      OPMECH.set(false);
-    }*/
-    
-   
-    
+      Clamp.set(false);
+    }
+
     //Toggles Pistake(The piston on the intake)
     if(UTaskActiv==0&&Controller1.ButtonUp.pressing()&&ButtonPressingU==0)
     {
@@ -371,7 +544,7 @@ int PTask(void)
     }
   
   
-      if(ATaskActiv==0&&Controller1.ButtonA.pressing()&&ButtonPressingA==0)
+    if(ATaskActiv==0&&Controller1.ButtonA.pressing()&&ButtonPressingA==0)
     {
       ButtonPressingA=1;
       ATaskActiv=1;
@@ -388,23 +561,88 @@ int PTask(void)
       
     }
     }
+
+  return 0;
   }
-    
-
-
-  
   
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              User Control Task                            */
-/*                                                                           */
-/*  This task is used to control your robot during the user control phase of */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
+int ButtonPressingL, LTaskActiv;
+int BTask(void) {
+  int mvel = 0;
+  int pow1 = 0;
+  //liftSensor.resetPosition();
+  while(true) {
+    cout<<(liftSensor.position(degrees))<<endl;
 
+    if(LTaskActiv==1) {
+      if(abs(liftSensor.position(degrees)) < 15) {
+        RunLift(60);
+        if(abs(liftSensor.position(degrees)) > 14) {
+          LTaskActiv = 0;
+        }
+      } 
+      else if(abs(liftSensor.position(degrees)) > 14) {
+        RunLift(-60);
+        if(abs(liftSensor.position(degrees)) < 14) {
+
+          LTaskActiv = 0;
+        }
+      } 
+    }
+    else {
+      pow1=((Controller1.ButtonL1.pressing()-Controller1.ButtonL2.pressing())*100);//Calculate intake power, if button pressed, button.pressing returns 1
+      if(pow1==0) {
+        lift.setStopping(hold);
+        lift.stop();
+      }
+      else {
+        RunLift(pow1);
+      }
+    }
+
+// copy of macro so if i break it i still have a backup 
+  // while(true) {
+  //   if(abs(liftSensor.position(degrees)) <= 19 && YTaskActiv==1) {
+  //     mvel = (90 - liftSensor.position(vex::rotationUnits::deg)) 1.25; //301.81
+  //     RunLift(-100);
+  //     std::cout << mvel << std::endl; //test
+  //     if(abs(liftSensor.position(degrees)) > 19) {
+  //       YTaskActiv = 0;
+  //     }
+  //   }
+  //   else {
+  //     pow1=((Controller1.ButtonR2.pressing()-Controller1.ButtonR1.pressing())100);//Calculate intake power, if button pressed, button.pressing returns 1
+  //     std::cout << mvel << std::endl; //test
+  //     if(pow1==0) {
+  //       lift.setStopping(hold);
+  //       lift.stop();
+  //     }
+  //     else {
+  //       RunLift(pow1);
+  //     }
+  //   }
+//commenting out the button a pressing macro because we do not have a rotation sensor for now
+
+    if(Controller1.ButtonB.pressing() && ButtonPressingL == 0) {
+      ButtonPressingL=1;
+      LTaskActiv=1;
+    }
+
+    else if(!Controller1.ButtonB.pressing())ButtonPressingL=0;
+
+    else if(LTaskActiv==1&&Controller1.ButtonB.pressing()&&ButtonPressingL==0) {
+      ButtonPressingL=1;
+      LTaskActiv=0;
+      RunLift(0);
+    }
+
+
+  }
+  return 0;
+}
+//
+// Main will set up the competition functions and callbacks.
+//
 void usercontrol(void) {
   EXIT=true;//Force Exit Autosel once drivercontrol began.
   // User control code here, inside the loop
@@ -413,11 +651,12 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
     
-     
+    
     
     task Dtask=task(DriveTask);
     task Atask=task(ATask);
     task Ptask=task(PTask);
+    task Btask = task(BTask);
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
@@ -427,11 +666,6 @@ void usercontrol(void) {
                     // prevent wasted resources.
   }
 }
-
-//
-// Main will set up the competition functions and callbacks.
-//
-
 
 int main() {
   
@@ -448,3 +682,4 @@ int main() {
     wait(100, msec);
   }
 }
+  

@@ -12,19 +12,19 @@ extern motor LB;
 extern motor RB;
 extern motor_group Roller;
 extern digital_out Tilt;
-extern digital_out Clamp1;
 extern digital_out Clamp;
-extern motor_group wallstakes;
 extern digital_out RightBackWing;
 extern digital_out Pistake;
 extern motor PU;
-extern motor Intake;
 extern inertial Gyro;
 extern digital_out LeftBackWing;
 extern digital_out OPMECH;
+extern motor_group lift;
 extern const double wheelDiam;
-extern const double wheelToMotorRatio;
-
+extern double wheelToMotorRatio;
+extern optical OpSens;
+extern digital_out doinker;
+extern rotation liftSensor;
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 

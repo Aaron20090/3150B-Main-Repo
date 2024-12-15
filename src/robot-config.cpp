@@ -9,30 +9,46 @@ brain  Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor LF = motor(PORT13, ratio6_1, true);
-motor LM = motor(PORT17, ratio6_1, true);
-motor RF = motor(PORT14, ratio6_1, false);
-motor RM = motor(PORT18, ratio6_1, false);
-motor LB = motor(PORT19, ratio6_1, true);
-motor RB = motor(PORT11, ratio6_1, false);
-motor Intake = motor(PORT12, ratio6_1, true);
-motor Lift = motor(PORT10, ratio6_1, true);
+//left side drive
+motor LF = motor(PORT12, ratio6_1, true);
+motor LM = motor(PORT16, ratio6_1, true);
+motor LB = motor(PORT14, ratio6_1, true);
+
+// right side drive
+motor RF = motor(PORT13, ratio6_1, false);
+motor RM = motor(PORT17, ratio6_1, false);
+motor RB = motor(PORT18, ratio6_1, false);
+
+// intake
+motor In1 = motor(PORT21, ratio6_1, true);
+motor In2 = motor(PORT21, ratio6_1, false);
+
+//Things for Lift
+motor Lt1= motor(PORT20, ratio36_1, true);
+motor Lt2= motor(PORT20, ratio36_1, false);
+
+//sensors
+rotation liftSensor = rotation(PORT1);
+optical OpSens = optical(PORT4);
+
+//define lift to brake when stopped
 
 //Motor Groups
-motor_group Roller = motor_group(Intake);
-motor_group wallstakes = motor_group(Lift);
-//Pistons
-digital_out OPMECH = digital_out(Brain.ThreeWirePort.B);
-digital_out Tilt = digital_out(Brain.ThreeWirePort.D);
-digital_out Clamp = digital_out(Brain.ThreeWirePort.A);
+motor_group Roller = motor_group(In1,In2);
+motor_group lift = motor_group(Lt1, Lt2);
 
-digital_out Pistake =digital_out(Brain.ThreeWirePort.C);
+//Pistons
+digital_out Pistake = digital_out(Brain.ThreeWirePort.G);
+//digital_out Tilt = digital_out(Brain.ThreeWirePort.B);
+digital_out Clamp = digital_out(Brain.ThreeWirePort.F);
+digital_out OPMECH =digital_out(Brain.ThreeWirePort.H);
+digital_out doinker = digital_out(Brain.ThreeWirePort.B);
 //Gyro and stuff for PID
-inertial Gyro = inertial(PORT20);
+inertial Gyro = inertial(PORT2);
 //Naming convention: 
 // Important variables
-const double wheelDiam = 2.75;
-const double wheelToMotorRatio = 48.0/36;
+const double wheelDiam = 3.25;
+double wheelToMotorRatio = 48/36;
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
