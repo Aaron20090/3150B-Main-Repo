@@ -575,15 +575,15 @@ int BTask(void) {
     cout<<(liftSensor.position(degrees))<<endl;
 
     if(LTaskActiv==1) {
-      if(abs(liftSensor.position(degrees)) < 15) {
+      if(abs(liftSensor.position(degrees)) < 16) {
         RunLift(60);
-        if(abs(liftSensor.position(degrees)) > 14) {
+        if(abs(liftSensor.position(degrees)) > 15) {
           LTaskActiv = 0;
         }
       } 
-      else if(abs(liftSensor.position(degrees)) > 14) {
+      else if(abs(liftSensor.position(degrees)) > 15) {
         RunLift(-60);
-        if(abs(liftSensor.position(degrees)) < 14) {
+        if(abs(liftSensor.position(degrees)) < 15) {
 
           LTaskActiv = 0;
         }

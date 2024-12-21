@@ -289,7 +289,7 @@ void armMoveToAngle(int deg, int speed) {
 
   if (abs(liftSensor.position(degrees)) < deg) {
     while (abs(liftSensor.position(degrees)) < deg) {
-      RunLift(-speed);
+      RunLift(speed);
     }
     lift.setStopping(hold);
     lift.stop();
@@ -297,7 +297,7 @@ void armMoveToAngle(int deg, int speed) {
   }
   else if (abs(liftSensor.position(degrees)) > deg) {
     while (abs(liftSensor.position(degrees)) > deg+4) {
-      RunLift(speed);
+      RunLift(-speed);
     }
     lift.setStopping(hold);
     lift.stop();
