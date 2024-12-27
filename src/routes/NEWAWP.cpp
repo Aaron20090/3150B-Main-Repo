@@ -8,63 +8,60 @@
 void Simple6Inverted(){
   PIDDataSet TestPara={1.5,0.1,0.15};
   lift.resetPosition();
+    
     Clamp.set(true);
     MoveEncoderPID(TestPara, -100, 5, 0.3, 0, true);
     TurnMaxTimePID(TestPara, 47, 0.4, true);
-    MoveEncoderPID(TestPara, 100, 22, 0.3, 47, true);
-    RunLift(70);
+    MoveEncoderPID(TestPara, 100, 23, 0.3, 47, true);
+    RunLift(100);
     wait(700,msec);
     RunLift(0);
     MoveEncoderPID(TestPara, -100, 23, 0.3, 47, true);
-   RunLift(-50);
+   RunLift(-100);
     TurnMaxTimePID(TestPara, 0, 0.4, true);
     liftSensor.resetPosition();  
     //commenting out bc alliance skate sucks 
     
     MoveEncoderPID(TestPara, -100, 15, 0.4, 1, false);//drive to Mogo Fast to save time
     RunLift(0);
-  MoveEncoderPID(TestPara, -70, 23, 0.4, 1, false);//Move back slower so moog doesn't go flying
+  MoveEncoderPID(TestPara, -70, 22, 0.4, 1, false);//Move back slower so moog doesn't go flying
   Clamp.set(false);
   wait(150,msec);
   //MoveEncoderPID(TestPara, 100, 3.3 , 0.3, 0, true);
   TurnMaxTimePID(TestPara, -125, 0.6, true);//turn to face 1st ring
  RunRoller(100);
-  MoveEncoderPID(TestPara, 100, 13, 0.3, -125,true);//drive to 1st ring
+  MoveEncoderPID(TestPara, 100, 10, 0.3, -125,true);//drive to 1st ring
 
-  MoveEncoderPID(TestPara, -100, 17, 0.2, -115 ,true);//drive back to be safe
-  TurnMaxTimePID(TestPara, -110, 0.3, true);//turn to 2nd ring
-  MoveEncoderPID(TestPara, 100, 29, 0.2, -110, true);//drive to second ring
-    MoveEncoderPID(TestPara, -100, 14, 0.2, -110, true);
-  MoveEncoderPID(TestPara, -100, 17, 0.2, -160, false);//drive back
+ // MoveEncoderPID(TestPara, -100, 17, 0.2, -115 ,true);//drive back to be safe
+  TurnMaxTimePID(TestPara, -89, 0.3, true);//turn to 2nd ring
+  MoveEncoderPID(TestPara, 100, 30, 0.2, -89, true);//drive to second ring
+  wait(100, msec);
+  //  MoveEncoderPID(TestPara, -100, 25, 0.2, -120, true);
+  MoveEncoderPID(TestPara, -100, 45, 0.2, -140, false);//drive back
   TurnMaxTimePID(TestPara, -90, 0.5, true);// turn to 3rd ring
   MoveEncoderPID(TestPara, 100, 28, 0.2, -90, true);//drive to 3rd ring
   MoveEncoderPID(TestPara, -100, 5, 0.4, -90, true);
   TurnMaxTimePID(TestPara, -35, 0.5, true);// turn to corner
-  MoveTimePID(TestPara, -80, 1.63, 0.2, -35, true);
-  wait(50,msec);
+  MoveTimePID(TestPara, -80, 1.50, 0.2, -35, true);
+  wait(100,msec);
     MoveEncoderPID(TestPara, -100, 5, 0.2, -35, true);//drive back
-  Pistake.set(true);
-    wait(100,msec);
-
-  MoveTimePID(TestPara, -80, 0.3, 0.2, -40, true);
-    wait(100,msec);
-
-  MoveEncoderPID(TestPara, -100, 13, 0.2, -40, true);//drive back
+ 
+  MoveEncoderPID(TestPara, -100, 7, 0.2, -40, true);//drive back
  TurnMaxTimePID(TestPara, 90, 0.5, true);//face last ring
-  MoveEncoderPID(TestPara, 100, 50, 0.2, 90, true);// drive to last ring
+  MoveEncoderPID(TestPara, 100, 50, 0.2, 85, true);// drive to last ring
   //lift.setVelocity(60,percent);
   //lift.spinTo(-86, degrees);//lift wall stakes
   Pistake.set(true);
-  MoveEncoderPID(TestPara, 100, 33, 0.4, 90, true);
+  MoveEncoderPID(TestPara, 100, 33, 0.4, 85, true);
    Pistake.set(false);
   MoveEncoderPID(TestPara, -100, 5, 0.3, 85, true);// drive  to last ring
   
   TurnMaxTimePID(TestPara, 182, 0.5, true);// turn to alliance stake
   
 
-  MoveEncoderPID(TestPara, 100, 20, 0.5, 172, false);// drive back
+  MoveEncoderPID(TestPara, 100, 10, 0.5, 172, false);// drive back
   RunLift(100);
-  wait(400, msec);
+  wait(425, msec);
   RunLift(0);
 
 
@@ -78,61 +75,69 @@ void Simple6(){
     RunRoller(100);
     wait(600,msec);
     RunRoller(0);
-    MoveEncoderPID(TestPara, 63, 15, 0.3, 0, true); //move back from alliance skate
+    MoveEncoderPID(TestPara, 63, 13, 0.3, 0, true); //move back from alliance skate
     TurnMaxTimePID(TestPara, -90, 0.6,true);
     MoveEncoderPID(TestPara, -80, 15 , 0.4, -90, false);//drive to Mogo Fast to save time
-    MoveEncoderPID(TestPara, -60, 14, 0.3, -90, false);// slow down so Mogo doesn't get sent flying
+    MoveEncoderPID(TestPara, -80, 12, 0.3, -90, false);// slow down so Mogo doesn't get sent flying
     Clamp.set(false);
-    MoveEncoderPID(TestPara, -80, 4, 0.3, -90, false);// slow down so Mogo doesn't get sent flying
+    wait(50, msec);
+    MoveEncoderPID(TestPara, -60, 4, 0.3, -90, false);// slow down so Mogo doesn't get sent flying
     TurnMaxTimePID(TestPara, 0,  0.3, true);// turn to ring behind mogo
     RunRoller(100);
-    MoveEncoderPID(TestPara, 100, 25, 0.3, 0, true);
-    TurnMaxTimePID(TestPara, 30, 0.3, true);// turn to wall skate  ring
-    MoveEncoderPID(TestPara, 60, 52, 0.3, 30, true);// drive to get ring
+    MoveEncoderPID(TestPara, 90, 30, 0.3, 0, true);//drive toward wall stake
+    TurnMaxTimePID(TestPara, 35, 0.3, true);// turn to wall skate  ring
+    MoveEncoderPID(TestPara, 60, 55, 0.3, 33, true);// drive to get ring
     TurnMaxTimePID(TestPara, 90, 0.3, true);//turn toward the wall skate ring
     RunLift(100);//bring lift up for macro 
     wait(120,msec);
     RunLift(0);
-   MoveTimePID(TestPara, -50, 1, 0.2, 90, true);//turn toward mogo and go into it
-wait(500, msec);
+    wait(100, msec);
+   MoveTimePID(TestPara, -40, 1.27,0.2, 89, true);//turn toward mogo and go into it
+wait(750, msec);
   RunRoller(0);
 
     
 
     RunLift(100); //score onto wall skate
-    wait(450,msec);
+    wait(550,msec);
     RunLift(0);
+    wait(150,msec);
 
-    MoveEncoderPID(TestPara, -100, 10, 0.3, 90, true); //move backward
+    MoveEncoderPID(TestPara, -100, 11, 0.3, 90, true); //move backward
     RunRoller(100);
 
 
     RunLift(-100);  //move lift down
-    wait(400,msec);
-    RunLift(0);
+    wait(100,msec);
 
     TurnMaxTimePID(TestPara, 180, 0.3, true); //turn toward rings 
+    wait(300, msec);
+    RunLift(0);
+
         RunRoller(100);
-    MoveEncoderPID(TestPara, 70, 90, 0.3, 180, true);// go toward the 3 rings
+    MoveEncoderPID(TestPara, 60, 105, 0.3, 176,true);// go toward the 3 rings
     wait(200, msec);
-    MoveEncoderPID(TestPara, 100, 5, 0.4, 180, true); // wait so i can get third ring without triple possions
+    MoveEncoderPID(TestPara, 60, 8, 0.4, 175, true); // wait so i can get third ring without triple possions
         MoveEncoderPID(TestPara, -100, 15, 0.3, 45, true);//turn to ring 
         wait(100, msec);
       
 
-    MoveEncoderPID(TestPara, 70, 18, 0.3, 45, true);
-    TurnMaxTimePID(TestPara, -45, 0.3, true);
-    MoveEncoderPID(TestPara, -70, 15, 0.3, -45, true);//turn to corner and dropit off
+    MoveEncoderPID(TestPara, 60, 30, 0.3, 45, true);
+    TurnMaxTimePID(TestPara, -15, 0.3, true);
+    MoveEncoderPID(TestPara, -100, 28, 0.3, -15, true);//turn to corner and dropit off
         wait(200,msec);
             Clamp.set(true);
-
-    MoveEncoderPID(TestPara,70, 15, 0.3, 0, true);// move forwad and allign with mogo
+        wait(200,msec);
+    MoveEncoderPID(TestPara,100, 7, 0.3, -15, true);// move forwad and allign with mogo
 
     TurnMaxTimePID(TestPara, 90, 0.4, true);//turn to mogo
-    MoveEncoderPID(TestPara, -100, 80, 0.4, 90, true);
-    MoveEncoderPID(TestPara, -70, 10, 0.4, 90, true);//go to mogo
+    MoveEncoderPID(TestPara, -100, 120, 0.4, 90, true);
+    MoveEncoderPID(TestPara, -50, 35, 0.4, 90, true);//go to mogo
     Clamp.set(false);//clamp
     wait(100, msec);
+    TurnMaxTimePID(TestPara, 0, 0.4, true);//turn to mogo
+    MoveEncoderPID(TestPara, 60, 30, 0.4, 0, true);//go to mogo
+
 
 
 
