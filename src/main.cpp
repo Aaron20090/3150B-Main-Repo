@@ -576,14 +576,14 @@ int BTask(void) {
 
     if(LTaskActiv==1) {
       if(abs(liftSensor.position(degrees)) < 16) {
-        RunLift(60);
-        if(abs(liftSensor.position(degrees)) > 15) {
+        RunLift(90);
+        if(abs(liftSensor.position(degrees)) > 14) {
           LTaskActiv = 0;
         }
       } 
-      else if(abs(liftSensor.position(degrees)) > 15) {
-        RunLift(-60);
-        if(abs(liftSensor.position(degrees)) < 15) {
+      else if(abs(liftSensor.position(degrees)) > 16) {
+        RunLift(-90);
+        if(abs(liftSensor.position(degrees)) < 18) {
 
           LTaskActiv = 0;
         }
